@@ -3,7 +3,7 @@ class CommandLineInterface
     
     def run
         greet
-        owner_menu
+        what_next
         
     end
 
@@ -20,12 +20,12 @@ class CommandLineInterface
         @cafe = Shop.find cafe_id
     end
 
-    def owner_menu
+    def what_next
         puts "=============================================="
-        puts "What would you like to do today?"
-        puts "1. See the menu"
-        puts "2. Search the menu"
-        puts "3. Add a drink from the menu"
+        puts "What would you like to do?"
+        puts "1. See your menu"
+        puts "2. Add a drink to your menu"
+        puts "3. "
         puts "4. Remove drink a drink from the menu"
         puts "5. Edit a drink's ingredients"
         puts "6. Quit"
@@ -36,14 +36,18 @@ class CommandLineInterface
     
         case choice
         when "1" 
-           @cafe.menu.display
-        # when "2"
-
+            @cafe.menu.display_my_menu
+            what_next
+        when "2"
+           @cafe.menu.add_drink_to_menu(cafe)
         # when "3"
         # when "4"
         # when "5"
-        # when "6"
+        when "6"
+            exit
         # binding.pry
+        else
+            "Invalid entry. Please try again."
         end
     end
     

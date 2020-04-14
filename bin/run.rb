@@ -1,6 +1,5 @@
 require_relative '../config/environment'
 
 cli = CommandLineInterface.new
-cafe = cli.greet
+cafe = cli.run
 # binding.pry
-cli.owner_menu

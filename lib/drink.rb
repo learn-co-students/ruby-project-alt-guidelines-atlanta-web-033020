@@ -3,9 +3,9 @@ class Drink < ActiveRecord::Base
     has_many :drink_ingredients
     has_many :ingredients, through: :drink_ingredients
 
-    attr_accessor :name
-    def initialize(name:)
-        @name = name
-    end
+    # attr_accessor :name
+    # def initialize(name:)
+    #     @name = name
+    # end
 
 end

@@ -1,2 +1,17 @@
 questions
 when a shop is created, should a new blank menu be created as well in that initialization?
+
+
+
+d1.ingredient << i9
+d2.ingredient << i1, i12
+d3.ingredient << i10, 12
+d4.ingredient << i1, i12, 16
+d5.ingredient << i9
+d6.ingredient << i9
+d7.ingredient << i9
+d8.ingredient << i9
+d9.ingredient << i12
+d10.ingredient << i2, i4
+d11.ingredient << i9, i14
+d12.ingredient << i9, i3

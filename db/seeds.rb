@@ -1,6 +1,5 @@
-
-
 Menu.destroy_all
+DrinksMenu.destroy_all
 Drink.destroy_all
 Ingredient.destroy_all
 DrinkIngredient.destroy_all
@@ -45,39 +44,36 @@ d12 = Drink.create(name: "café bombón")
 
 # =============================Menu seeds=============================
 
-cafe1.menu = Menu.create()
-cafe2.menu = Menu.create()
-cafe3.menu = Menu.create()
-cafe4.menu = Menu.create()
-cafe5.menu = Menu.create()
+m1 = Menu.create(shop_id: cafe1.id)
+m2 = Menu.create(shop_id: cafe2.id)
+m3 = Menu.create(shop_id: cafe3.id)
+m4 = Menu.create(shop_id: cafe4.id)
+m5 = Menu.create(shop_id: cafe5.id)
 
 
-cafe1.menu.drinks = Drink.all
-binding.pry 
-cafe2.menu.drinks = Drink.all
-cafe3.menu.drinks = Drink.all
-cafe4.menu.drinks = Drink.all
-cafe5.menu.drinks = Drink.all
+20.times do
+    a = DrinksMenu.new(menu_id: Shop.all.sample.menu.id, drink_id: Drink.all.sample.id)
+    if a.valid?
+        a.save!
+    end
+end
 
 # ===========================Drink Ing seeds=============================
-d1.ingredients << i9
-d2.ingredients << [i1, i2]
-d3.ingredients << [i10, i12]
-d4.ingredients << [i1, i12, i6]
-d5.ingredients << i9
-d6.ingredients << i9
-d7.ingredients << i9
-d8.ingredients << i9
-d9.ingredients << i12
-d10.ingredients << [i2, i4]
-d11.ingredients << [i9, i14]
-d12.ingredients << [i9, i3]
 
-# =============================Menu drink seeds=============================
+20.times do
+    a = DrinkIngredient.new(drink_id: Drink.all.sample.id, ingredient_id: Ingredient.all.sample.id)
+    a.save!
+end
 
-# Menu.first.drinks = Drink.all
-# # binding.pry
-# Menu.second.drinks = Drink.all
-# Menu.third.drinks = Drink.all
-# Menu.fourth.drinks = Drink.all
-# Menu.fifth.drinks = Drink.all
+# d1.ingredients << i9
+# d2.ingredients << [i1, i2]
+# d3.ingredients << [i10, i12]
+# d4.ingredients << [i1, i12, i6]
+# d5.ingredients << i9
+# d6.ingredients << i9
+# d7.ingredients << i9
+# d8.ingredients << i9
+# d9.ingredients << i12
+# d10.ingredients << [i2, i4]
+# d11.ingredients << [i9, i14]
+# d12.ingredients << [i9, i3]

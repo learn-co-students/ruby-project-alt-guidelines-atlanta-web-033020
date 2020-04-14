@@ -34,15 +34,17 @@ class CommandLineInterface
         puts "=============================================="
         choice = gets.chomp
     
-        # case choice
-        # when "1" 
-        #    @cafe.menu.display
+        case choice
+        when "1" 
+           @cafe.menu.display
         # when "2"
+
         # when "3"
         # when "4"
         # when "5"
         # when "6"
         # binding.pry
+        end
     end
     
 end

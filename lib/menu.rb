@@ -17,7 +17,7 @@ class Menu < ActiveRecord::Base
     
     def add_drink_to_menu(cafe)
         # binding.pry
-        Drink.display_all
+        Drink.display_all_drinks
         puts "=============================================="
         puts "What would you like to do? Pick one:" 
         puts "1. Add one of these drinks"

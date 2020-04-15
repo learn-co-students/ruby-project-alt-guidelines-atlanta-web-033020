@@ -20,7 +20,7 @@ class CommandLineInterface
     end
 
     def what_next
-        puts "========================================="
+        puts "=============================================="
         puts "What would you like to do?"
         puts "         >>>>>MENU ITEMS<<<<<"
         puts "1. See your menu"
@@ -30,12 +30,10 @@ class CommandLineInterface
         puts "         >>>>>INGREDIENTS<<<<<"
         puts "5. See all ingredients"
         puts "6. Create new ingredient" 
-        puts "7. Edit an item's ingredients"
-        puts "8. EXIT app"
-        # puts "Delete an ingredient"
-        puts "========================================="
+        puts "7. EXIT app"
+        puts "=============================================="
         puts "Enter a number:"
-        puts "========================================="
+        puts "=============================================="
         choice = gets.chomp
     
         case choice
@@ -43,23 +41,21 @@ class CommandLineInterface
             @cafe.menu.display_my_menu
             what_next
         when "2"
-           @cafe.menu.add_drink_to_menu(cafe)
+           @cafe.add_item_to_menu
            what_next
         when "3"
-            @cafe.menu.remove_from_menu(@cafe)
+            @cafe.remove_from_menu
             what_next
         when "4"
-            CreatesDrink.new.run
+            Drink.new.invent_new_drink
             what_next
         when "5"
             Ingredient.display_all_ingredients
             what_next
         when "6"
-            CreatesIngredient.new.run
+            Ingredient.new.add_ingredient
             what_next
         when "7"
-            
-        when "8"
             exit
         else
             "Invalid entry. Please try again."

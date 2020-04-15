@@ -10,7 +10,7 @@ class Menu < ActiveRecord::Base
         self.drinks.each_with_index do |drink, index|
             puts "Drink ID ===>>(#{drink.id})<<=== #{drink.name}"
             # puts "#{drink.name} --> Drink ID (#{drink.id})"
-            # |drink, index| are here in case we wanted a numbered list but that may confuse user and yield index input rather than drink_id
+            # |drink, index| are here in case we want a numbered list but that may confuse user and yield index input rather than drink_id
         end
         puts "=============================================="
     end
@@ -37,7 +37,7 @@ class Menu < ActiveRecord::Base
                 puts "This drink is already on your menu. Please try again."
                 puts "=============================================="
                 add_drink_to_menu(cafe)
-            elsif Drink.all.map {|d| d.id}.include? lookup_drink_id.to_i
+            elsif Drink.find_by(lookup_drink_id.to_i)
                 new_drink_to_menu = DrinksMenu.new(drink_id: lookup_drink_id.to_i, menu_id: cafe.menu.id)
                 new_drink_to_menu.save
                 puts "==============================================" 
@@ -63,23 +63,6 @@ class Menu < ActiveRecord::Base
             puts "Error: Drink ID invalid. Please try again."
             add_drink_to_menu(cafe)
         end
-    end
-
-    def remove_from_menu(cafe)
-    # this method should remove a specified item from a shop's menu.
-    # cafe object and drink_id must be passed in as arguments.
-        display_my_menu
-        puts "=============================================="
-        puts "Which item do you want to remove?"
-        puts "Enter the ID and press enter."
-        puts "=============================================="    
-        id_string = gets.chomp
-        id = id_string.to_i
-        # binding.pry
-        DrinksMenu.where(menu_id: cafe.menu.id, drink_id: id).first.destroy
-        cafe.menu.drinks.reload
-        display_my_menu
-        puts ">>  Item removed from menu  <<"
     end
 
 end

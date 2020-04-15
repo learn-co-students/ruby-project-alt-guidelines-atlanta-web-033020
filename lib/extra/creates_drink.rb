@@ -1,5 +1,5 @@
 class CreatesDrink
-
+  # this class handles requests from shop owners who want to create a new drink that does not exist in Drink.all
   def initialize
     @ingredients = []
   end
@@ -92,3 +92,47 @@ class CreatesDrink
     puts "=============================================="
   end
 end
+
+
+
+
+
+######## Code I started with before refactoring to the above
+# def create_drink
+#   puts "=============================================="    
+#   puts "Create new menu item"
+#   puts "Enter the NAME of this item below."
+#   puts "=============================================="
+#   self.name = gets.chomp
+#   puts "=============================================="    
+#   puts "Enter the PRICE of this item below."
+#   puts "=============================================="
+#   drink_price = gets.chomp
+#   self.price = drink_price.to_f
+#   puts "=============================================="
+#   puts "What INGREDIENTS does this item have?"
+#   puts "=============================================="
+#   puts "Enter ID from list below **OR**"
+#   puts "enter '0' to add a new ingredient."
+#   puts "type DONE when finished."
+#   puts "=============================================="
+#   #display all ingredient options
+#   Ingredient.display_all_ingredients
+#   ingredient_choice = gets.chomp
+#   # binding.pry
+#   if Ingredient.id_exists?(ingredient_choice)
+#       self.ingredients << ingredient_choice
+#   elsif ingredient_choice = "0" # meaning create a new ingredient option
+#       new_ingredient = Drink.add_new_ingredient
+#       new_ingredient.save
+          
+#       puts "=============================================="
+#       puts "Ingredient added to item"
+#       puts "=============================================="
+#   elsif ingredient_choice = "DONE"
+#   else
+#       puts "=============================================="
+#       puts "Invalid entry. Please try again."
+#       puts "=============================================="
+#   end
+# end

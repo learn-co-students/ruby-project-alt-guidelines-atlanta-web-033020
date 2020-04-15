@@ -34,5 +34,5 @@ class CreatesIngredient
 
     def show_all_ingredients
         Ingredient.display_all_ingredients
-      end
+    end
 end

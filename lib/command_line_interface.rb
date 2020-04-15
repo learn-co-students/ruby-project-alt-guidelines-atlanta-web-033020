@@ -4,7 +4,6 @@ class CommandLineInterface
     def run
         greet
         what_next
-        
     end
 
     def greet
@@ -21,17 +20,22 @@ class CommandLineInterface
     end
 
     def what_next
-        puts "=============================================="
+        puts "========================================="
         puts "What would you like to do?"
+        puts "         >>>>>MENU ITEMS<<<<<"
         puts "1. See your menu"
         puts "2. Add an item to your menu"
         puts "3. Remove an item from the menu"
         puts "4. Create a new item"
-        puts "5. Edit an item's ingredients"
-        puts "6. Quit"
-        puts "Enter a number:"
+        puts "         >>>>>INGREDIENTS<<<<<"
+        puts "5. See all ingredients"
+        puts "6. Create new ingredient" 
+        puts "7. Edit an item's ingredients"
+        puts "8. EXIT app"
         # puts "Delete an ingredient"
-        puts "=============================================="
+        puts "========================================="
+        puts "Enter a number:"
+        puts "========================================="
         choice = gets.chomp
     
         case choice
@@ -48,9 +52,14 @@ class CommandLineInterface
             CreatesDrink.new.run
             what_next
         when "5"
-        # TODO: Need to set up Drink.new initialization first
-            # Drink.edit_drink_ingredients(@cafe)
+            Ingredient.display_all_ingredients
+            what_next
         when "6"
+            CreatesIngredient.new.run
+            what_next
+        when "7"
+            
+        when "8"
             exit
         else
             "Invalid entry. Please try again."

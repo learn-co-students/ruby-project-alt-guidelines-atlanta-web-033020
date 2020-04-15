@@ -30,7 +30,7 @@ class CreatesDrink
     if Ingredient.id_exists?(@choice)
       @ingredients << Ingredient.find_by(id: @choice.to_i)
     else
-      puts "Could not find that ingredient"
+      puts "Could not find that ingredient."
     end
   end
 

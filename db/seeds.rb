@@ -44,11 +44,11 @@ d12 = Drink.create(name: "café bombón")
 
 # =============================Menu seeds=============================
 
-m1 = Menu.create(shop_id: cafe1.id)
-m2 = Menu.create(shop_id: cafe2.id)
-m3 = Menu.create(shop_id: cafe3.id)
-m4 = Menu.create(shop_id: cafe4.id)
-m5 = Menu.create(shop_id: cafe5.id)
+m1 = Menu.new(shop_id: cafe1.id)
+m2 = Menu.new(shop_id: cafe2.id)
+m3 = Menu.new(shop_id: cafe3.id)
+m4 = Menu.new(shop_id: cafe4.id)
+m5 = Menu.new(shop_id: cafe5.id)
 
 
 20.times do

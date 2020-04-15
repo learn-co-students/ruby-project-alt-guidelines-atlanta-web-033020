@@ -24,10 +24,10 @@ class CommandLineInterface
         puts "=============================================="
         puts "What would you like to do?"
         puts "1. See your menu"
-        puts "2. Add a drink to your menu"
-        puts "3. "
-        puts "4. Remove drink a drink from the menu"
-        puts "5. Edit a drink's ingredients"
+        puts "2. Add an item to your menu"
+        puts "3. Remove an item from the menu"
+        puts "4. Edit an item's ingredients"
+        puts "5. "
         puts "6. Quit"
         puts "Enter a number:"
         # puts "Delete an ingredient"
@@ -40,12 +40,16 @@ class CommandLineInterface
             what_next
         when "2"
            @cafe.menu.add_drink_to_menu(cafe)
-        # when "3"
-        # when "4"
+           what_next
+        when "3"
+            @cafe.menu.remove_from_menu(@cafe)
+            what_next
+        when "4"
+        # TODO: Need to set up Drink.new initialization first
+            Drink.edit_drink_ingredients(@cafe)
         # when "5"
         when "6"
             exit
-        # binding.pry
         else
             "Invalid entry. Please try again."
         end

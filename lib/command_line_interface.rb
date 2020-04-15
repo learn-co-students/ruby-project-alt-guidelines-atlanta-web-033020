@@ -26,8 +26,8 @@ class CommandLineInterface
         puts "1. See your menu"
         puts "2. Add an item to your menu"
         puts "3. Remove an item from the menu"
-        puts "4. Edit an item's ingredients"
-        puts "5. "
+        puts "4. Create a new item"
+        puts "5. Edit an item's ingredients"
         puts "6. Quit"
         puts "Enter a number:"
         # puts "Delete an ingredient"
@@ -45,9 +45,11 @@ class CommandLineInterface
             @cafe.menu.remove_from_menu(@cafe)
             what_next
         when "4"
+            CreatesDrink.new.run
+            what_next
+        when "5"
         # TODO: Need to set up Drink.new initialization first
-            Drink.edit_drink_ingredients(@cafe)
-        # when "5"
+            # Drink.edit_drink_ingredients(@cafe)
         when "6"
             exit
         else

@@ -40,7 +40,6 @@ class Menu < ActiveRecord::Base
             elsif Drink.all.map {|d| d.id}.include? lookup_drink_id.to_i
                 new_drink_to_menu = DrinksMenu.new(drink_id: lookup_drink_id.to_i, menu_id: cafe.menu.id)
                 new_drink_to_menu.save
-                binding.pry
                 puts "==============================================" 
                 puts "Drink saved to your menu"
                 puts "==============================================" 
@@ -51,6 +50,12 @@ class Menu < ActiveRecord::Base
             end
         when "2"
             ## TODO 
+            new_drink = Drink.new
+            new_drink.save
+            new_drink.create_drink
+            binding.pry
+            
+
         when "3"
         when "4"
             exit

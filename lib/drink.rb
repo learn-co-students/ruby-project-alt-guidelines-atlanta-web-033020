@@ -4,7 +4,7 @@ class Drink < ActiveRecord::Base
     has_many :drinks_menus
     has_many :menus, through: :drinks_menus
     
-    def initialize
+    def initialize(some_data)
         @ingredients = []
     end
 
@@ -17,6 +17,7 @@ class Drink < ActiveRecord::Base
     end
 
     def invent_new_drink
+        binding.pry
         set_name
         set_price
         set_ingredients
@@ -75,10 +76,6 @@ class Drink < ActiveRecord::Base
         @name = gets.chomp
     end
     
-    def self.id_exists?(id)
-        self.find_by(id: id.to_i)
-    end
-
     def prompt_for_name
         puts "=============================================="    
         puts "Create new menu item"

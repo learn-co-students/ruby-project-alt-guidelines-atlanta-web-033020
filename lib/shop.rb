@@ -1,18 +1,13 @@
 class Shop < ActiveRecord::Base
     has_one :menu
-
+    
     def add_item_to_menu
         prompt = TTY::Prompt.new
+        prompts_for_item_to_add
         # shows what cafe instance DOES NOT have currently on menu
-        puts "=============================================="
-        puts "           Choose from below to  "
-        puts "           **ADD** TO YOUR MENU"
-        puts "=============================================="
         items = Drink.all - self.menu.drinks
-        list = []
-        # list =  items.each { |item| puts "#{item.name}"}
-        list =  items.map {|item| item.name}
-        @choice = prompt.select("Use arrows & ENTER to select your shop:", list << "EXIT")
+        menu_list =  items.map {|item| item.name}
+        @choice = prompt.select("Use arrows & ENTER to select your shop:", menu_list << "EXIT")
         puts "=============================================="
         # binding.pry
         if @choice != "EXIT"
@@ -30,18 +25,20 @@ class Shop < ActiveRecord::Base
     def remove_from_menu
         # this method should remove a specified item from a shop's menu.
         prompt = TTY::Prompt.new
-        puts "=============================================="
-        puts "             MY CURRENT MENU"
-        puts "=============================================="
-        list =  self.drinks_menus.each {|dm| puts "#{dm.drink.name}"}
-        puts "=============================================="
         prompts_for_item_to_remove
-        id = prompt.select("Use arrows & ENTER to select your shop:", list)
-            if DrinksMenu.find_by(drink_id: id.to_i)
-                DrinksMenu.where(menu_id: self.menu.id, drink_id: id.to_i).first.destroy
-            else
-                puts "Item ID is invalid"
-            end
+        menu_list =  self.menu.drinks_menus.map {|dm| dm.drink.name}
+        
+        # Gets user selection of "item name"
+        drink_name = prompt.select("Use arrows & ENTER to select your shop:", menu_list << "EXIT")
+        
+        # Finds drink_id for item and assign to variable to shorten
+        drink_id_to_remove = self.menu.drinks.find_by(name: drink_name)
+        
+        # Isolates DrinksMenu table row in var named 'removal' then destroys the record
+        removal = DrinksMenu.where(menu_id: self.menu.id, drink_id: drink_id_to_remove).first
+        removal.destroy
+        
+        # local variavle for self must be updated in order for menu to display change
         self.reload
         self.menu.display_my_menu
         puts ">>  Item removed from menu  <<"
@@ -63,17 +60,17 @@ class Shop < ActiveRecord::Base
 
     def prompts_for_item_to_add
         puts "=============================================="
-        puts "What items would you like to add? Pick one:" 
-        puts "=> Enter ID below: "
-        puts "=> Type DONE when finished"
+        puts "           Choose from below to  "
+        puts "           **ADD** TO YOUR MENU"
         puts "=============================================="
     end
 
     def prompts_for_item_to_remove
         puts "=============================================="
-        puts "Which item do you want to remove?"
-        puts "Enter the ID and press enter."
-        puts "==============================================" 
+        puts "             MY CURRENT MENU"
+        puts "=============================================="
+        puts "=============================================="
+        puts "     Which item do you want to remove?"
     end
 
 end

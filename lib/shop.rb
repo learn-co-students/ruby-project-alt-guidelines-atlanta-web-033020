@@ -1,59 +1,63 @@
 class Shop < ActiveRecord::Base
+    has_one :menu
 
     def add_item_to_menu
-        # @cafe = cafe
-        selects_menu_item
-        adds_item_to_my_menu
+        prompt = TTY::Prompt.new
+        # shows what cafe instance DOES NOT have currently on menu
+        puts "=============================================="
+        puts "           Choose from below to  "
+        puts "           **ADD** TO YOUR MENU"
+        puts "=============================================="
+        items = Drink.all - self.menu.drinks
+        list = []
+        # list =  items.each { |item| puts "#{item.name}"}
+        list =  items.map {|item| item.name}
+        @choice = prompt.select("Use arrows & ENTER to select your shop:", list << "EXIT")
+        puts "=============================================="
+        # binding.pry
+        if @choice != "EXIT"
+            new_drink_id = Drink.find_by(name: @choice).id
+            new_drink = DrinksMenu.new(menu_id: self.menu.id, drink_id: new_drink_id)
+            new_drink.save!
+            self.reload
+            puts "=============================================="
+            puts "            ITEM ADDED TO MENU"
+            puts "=============================================="
+            self.menu.display_my_menu
+        end
     end
     
     def remove_from_menu
         # this method should remove a specified item from a shop's menu.
-        self.menu.display_my_menu
-        prompts_for_item_to_remove # helper method below
-        id = gets.chomp.to_i
-        if DrinksMenu.find_by(drink_id: id)
-            DrinksMenu.where(menu_id: self.menu.id, drink_id: id).first.destroy
-        else
-            puts "Item ID is invalid"
-        end
-        self.menu.drinks.reload
-        #This is where I had and issue with menu not displaying menu less the destroyed item
+        prompt = TTY::Prompt.new
+        puts "=============================================="
+        puts "             MY CURRENT MENU"
+        puts "=============================================="
+        list =  self.drinks_menus.each {|dm| puts "#{dm.drink.name}"}
+        puts "=============================================="
+        prompts_for_item_to_remove
+        id = prompt.select("Use arrows & ENTER to select your shop:", list)
+            if DrinksMenu.find_by(drink_id: id.to_i)
+                DrinksMenu.where(menu_id: self.menu.id, drink_id: id.to_i).first.destroy
+            else
+                puts "Item ID is invalid"
+            end
+        self.reload
         self.menu.display_my_menu
         puts ">>  Item removed from menu  <<"
     end
 
-    private
-
-    def selects_menu_item
-        shows_menu_of_all_items_i_dont_have
-        prompts_for_item_to_add
-        @choice = gets.chomp
-    end
-
-    def adds_item_to_my_menu
-        if Drink.find_by(id: @choice)
-            new_drink = DrinksMenu.create(menu_id: self.menu.id, drinks_id: @choice)
-            #DrinksMenu.all.reload
-            puts "=============================================="
-            puts "ITEM ADDED TO MENU"
-            puts "=============================================="
-            self.menu.display_my_menu
-        else
-            puts "========================================================"
-            puts "Could not find that item. Try again or create a new one."
-            puts "========================================================"
-        end
-    end
-
     def shows_menu_of_all_items_i_dont_have
+        prompt = TTY::Prompt.new
         # shows what cafe instance DOES NOT have currently on menu
         puts "=============================================="
-        puts "ITEMS AVAILABLE TO ADD TO MY MENU"
+        puts "           Choose from below to"
+        puts "           **ADD** TO YOUR MENU"
         puts "=============================================="
         items = Drink.all - self.menu.drinks
-        items.each do |item|
-            puts "Drink ID ===>>(#{each.id})<<=== #{each.name}"
-        end
+        list =  items.map do |item|
+            puts "#{item.name}"
+            end
         puts "=============================================="
     end
 
@@ -72,10 +76,4 @@ class Shop < ActiveRecord::Base
         puts "==============================================" 
     end
 
-    def add_drinks
-        # this method could keep user looking at menu to add until types "DONE"
-        while @choice != "DONE" do
-            adds_item_to_my_menu
-        end
-    end
 end

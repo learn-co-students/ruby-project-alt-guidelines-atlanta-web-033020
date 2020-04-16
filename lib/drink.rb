@@ -9,7 +9,9 @@ class Drink < ActiveRecord::Base
     end
 
     def self.display_all_drinks
+        binding.pry
         Drink.all.each_with_index do |val, index|
+            binding.pry
             puts "#{index + 1}. #{val.name} --> Drink ID (#{val.id})"
         end
     end

@@ -26,7 +26,7 @@ class Drink < ActiveRecord::Base
         
         end
         puts "=============================================="
-        @ingredients.pop
+        @ingredients.pop #removes nil that gets shoved on after EXIT menu selected
         @ingredients.each do |i|
             puts "#{i.name} was added to drink"
             end

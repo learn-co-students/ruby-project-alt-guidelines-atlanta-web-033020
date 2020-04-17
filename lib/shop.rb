@@ -9,8 +9,7 @@ class Shop < ActiveRecord::Base
         menu_list =  items.map {|item| item.name}
         @choice = prompt.select("Use arrows & ENTER to select your shop:", menu_list.unshift("EXIT menu"))
         puts "=============================================="
-        # binding.pry
-        if @choice != "EXIT"
+        if @choice != menu_list[0]
             new_drink_id = Drink.find_by(name: @choice).id
             new_drink = DrinksMenu.new(menu_id: self.menu.id, drink_id: new_drink_id)
             new_drink.save!

@@ -7,7 +7,7 @@ class Shop < ActiveRecord::Base
         # shows what cafe instance DOES NOT have currently on menu
         items = Drink.all - self.menu.drinks
         menu_list =  items.map {|item| item.name}
-        @choice = prompt.select("Use arrows & ENTER to select your shop:", menu_list << "EXIT")
+        @choice = prompt.select("Use arrows & ENTER to select your shop:", menu_list.unshift("EXIT menu"))
         puts "=============================================="
         # binding.pry
         if @choice != "EXIT"

@@ -25,38 +25,37 @@ class CommandLineInterface
         puts "         >>>>>MENU ITEMS<<<<<"
         puts "      What would you like to do?"
         puts "=============================================="
-            list = [
+            menu_list = [
             "See your menu",
             "Add an item to your menu",
             "Remove an item from the menu",
             "Create a new item",
             "See all ingredients",
-            "Create new ingredient",
-            "EXIT"
+            "Create new ingredient"
             ]
-        @choice = prompt.select("Use arrows & ENTER to select your shop:", list)
+        @choice = prompt.select("Use arrows & ENTER to select your shop:", menu_list.unshift("EXIT"))
         puts "=============================================="
         
         case @choice
-        when list[0]
+        when menu_list[1]
             cafe.menu.display_my_menu
             what_next
-        when list[1]
+        when menu_list[2]
            @cafe.add_item_to_menu
            what_next
-        when list[2]
+        when menu_list[3]
             @cafe.remove_from_menu
             what_next
-        when list[3]
+        when menu_list[4]
             Drink.new.invent_new_drink
             what_next
-        when list[4]
+        when menu_list[5]
             Ingredient.display_all_ingredients
             what_next
-        when list[5]
+        when menu_list[6]
             Ingredient.new.add_ingredient
             what_next
-        when list[6]
+        when menu_list[0]
             exit
         end
     end

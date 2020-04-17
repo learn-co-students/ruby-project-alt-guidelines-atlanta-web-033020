@@ -7,7 +7,8 @@ class Ingredient < ActiveRecord::Base
         prompt_for_name
         @name = gets.chomp.downcase
         if !Ingredient.find_by(name: @name)
-            Ingredient.create(name: @name)
+            self.name = @name
+            self.save
             puts "=============================================="
             puts "        Ingredient added to list"
             puts "=============================================="
@@ -19,10 +20,12 @@ class Ingredient < ActiveRecord::Base
     end
 
     def self.display_all_ingredients
-        Ingredient.all.each do |i|
-            puts "Ingredient ID >>>(#{i.id})<<<  #{i.name}"
-        end
         puts "=============================================="
+        puts "          >>>>>ALL INGREDIENTS<<<<<"
+        puts "=============================================="
+        Ingredient.all.each do |i|
+            puts "==>  #{i.name}"
+        end
     end
 
     def set_name
@@ -32,24 +35,13 @@ class Ingredient < ActiveRecord::Base
         @name = input.downcase
     end
     
-    def create_ingredient
-        if !Ingredient.find_by(name: @name)
-            Ingredient.create(name: @name)
-            puts "=============================================="
-            puts "Ingredient added to list"
-            puts "=============================================="
-        else
-            puts "=============================================="
-            puts "This item exists already in the system."
-            puts "=============================================="
-        end
-    end
-
     def prompt_for_name
         puts "=============================================="    
-        puts "Add new ingredient to list"
-        puts "Existing ingredients listed above"
-        puts "Enter the NAME below. Type DONE to exit"
+        puts "  ^^ Existing ingredients listed above ^^"
+        puts "=============================================="   
+        puts "    To ADD new ingredient to list:"
+        puts "  -Enter the NAME below"
+        puts "  -Type DONE to exit"
         puts "=============================================="
     end
 end

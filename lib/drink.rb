@@ -4,16 +4,11 @@ class Drink < ActiveRecord::Base
     has_many :drinks_menus
     has_many :menus, through: :drinks_menus
 
-    def self.display_all_drinks
-        binding.pry
-        Drink.all.each_with_index do |val, index|
-            binding.pry
-            puts "#{index + 1}. #{val.name} --> Drink ID (#{val.id})"
-        end
-    end
 
     def invent_new_drink
-        prompt = TTY::Prompt.new(enable_color: true)
+        prompt = TTY::Prompt.new(active_color: :yellow)
+        font = TTY::Font.new(:standard)
+        pastel = Pastel.new
         set_name
         set_price
         @ingredients = []
@@ -23,22 +18,18 @@ class Drink < ActiveRecord::Base
             prompt_for_ingredients
             @choice = prompt.select("Use arrows & ENTER to select:", menu_list.unshift("EXIT menu"))
             @ingredients << Ingredient.find_by(name: @choice)
-        
         end
-        puts "=============================================="
         @ingredients.pop #removes nil that gets shoved on after EXIT menu selected
         @ingredients.each do |i|
-            puts "#{i.name} was added to drink"
+            puts pastel.yellow("#{i.name} was added to drink")
             end
-        puts "=============================================="
         create_drink_if_valid
     end
 
-    def add_created_drink_to_my_menu
-        
-    end
-
     def create_drink_if_valid
+        prompt = TTY::Prompt.new(active_color: :yellow)
+        font = TTY::Font.new(:standard)
+        pastel = Pastel.new
         if @ingredients.any?
             self.name = @name
             self.price = @price
@@ -46,10 +37,10 @@ class Drink < ActiveRecord::Base
             self.save
             return self
         else
-            puts "=============================================="
-            puts "An item needs at least one ingredient."
-            puts "No new item was created."
-            puts "=============================================="
+            puts pastel.red("===================================================")
+            puts pastel.yellow("An item needs at least one ingredient.")
+            puts pastel.yellow("No new item was created.")
+            puts pastel.red("===================================================")
         end
     end
 
@@ -81,28 +72,35 @@ class Drink < ActiveRecord::Base
     end
     
     def prompt_for_name
-        puts "=============================================="    
-        puts "Create new menu item"
-        puts "Enter the NAME of this item below."
-        puts "=============================================="
+        font = TTY::Font.new(:standard)
+        pastel = Pastel.new
+        puts pastel.red("===================================================")
+        puts pastel.yellow("Create new menu item")
+        puts pastel.yellow("Enter the NAME of this item below.")
+        puts pastel.red("===================================================")
     end
 
     def prompt_for_price
-        puts "=============================================="    
-        puts "Enter the PRICE of this item below."
-        puts "=============================================="
+        font = TTY::Font.new(:standard)
+        pastel = Pastel.new
+        puts pastel.red("===================================================")
+        puts pastel.yellow("Enter the PRICE of this item below.")
+        puts pastel.red("===================================================")
     end
     
     def prompt_for_ingredients
-        puts "=============================================="
-        puts "  Select INGREDIENTS to add to this item: "
-        puts "=============================================="
+        font = TTY::Font.new(:standard)
+        pastel = Pastel.new
+        puts pastel.red("===================================================")
+        puts pastel.yellow("  Select INGREDIENTS to add to this item: ")
+        puts pastel.red("===================================================")
     end
 
-    def prompt_to_confirm_add_to_menu
-        puts "=============================================="
-        puts "   Add this new drink to your menu now? "
-        puts "=============================================="
-    end
+    # def self.display_all_drinks
+    #     Drink.all.each_with_index do |val, index|
+    #         binding.pry
+    #         puts "#{index + 1}. #{val.name} --> Drink ID (#{val.id})"
+    #     end
+    # end
 
 end

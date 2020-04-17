@@ -7,7 +7,7 @@ class CommandLineInterface
     end
 
     def greet
-        prompt = TTY::Prompt.new(active_color: :yellow)
+        prompt = TTY::Prompt.new(active_color: :yellow, help_color: :cyan)
         font = TTY::Font.new(:standard)
         pastel = Pastel.new
         displays_greet_banner
@@ -17,15 +17,15 @@ class CommandLineInterface
     end
 
     def what_next
-        prompt = TTY::Prompt.new(active_color: :yellow)
+        prompt = TTY::Prompt.new(active_color: :yellow, help_color: :cyan)
         display_main_menu
             menu_list = [
-            "See your menu",
-            "Add an item to your menu",
-            "Remove an item from the menu",
-            "Create a new item",
-            "See all ingredients",
-            "Create new ingredient"]
+            "See your menu", # 1 on menu
+            "Add an item to your menu", # 2 on menu
+            "Remove an item from the menu", # 3 on menu
+            "Create a new item", # 4 on menu
+            "See all ingredients", # 5 on menu
+            "Create new ingredient"] # 6 on menu
         @choice = prompt.select("Use arrows & ENTER to select your shop:", menu_list.unshift("EXIT"))
         
         case @choice

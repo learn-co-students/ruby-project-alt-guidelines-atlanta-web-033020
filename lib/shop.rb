@@ -2,7 +2,7 @@ class Shop < ActiveRecord::Base
     has_one :menu
     
     def add_item_to_menu
-        prompt = TTY::Prompt.new
+        prompt = TTY::Prompt.new(enable_color: true)
         prompts_for_item_to_add
         # shows what cafe instance DOES NOT have currently on menu
         items = Drink.all - self.menu.drinks
@@ -23,7 +23,7 @@ class Shop < ActiveRecord::Base
     
     def remove_from_menu
         # this method should remove a specified item from a shop's menu.
-        prompt = TTY::Prompt.new
+        prompt = TTY::Prompt.new(enable_color: true)
         prompts_for_item_to_remove
         menu_list =  self.menu.drinks_menus.map {|dm| dm.drink.name}
         
@@ -44,7 +44,7 @@ class Shop < ActiveRecord::Base
     end
 
     def shows_menu_of_all_items_i_dont_have
-        prompt = TTY::Prompt.new
+        prompt = TTY::Prompt.new(enable_color: true)
         # shows what cafe instance DOES NOT have currently on menu
         puts "=============================================="
         puts "           Choose from below to"

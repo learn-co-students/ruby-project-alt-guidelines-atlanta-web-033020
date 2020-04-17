@@ -7,11 +7,11 @@ class CommandLineInterface
     end
 
     def greet
-        prompt = TTY::Prompt.new
-        puts "==============================================="
+        prompt = TTY::Prompt.new(enable_color: true)
+        puts "==================================================="
         puts "         Welcome to Manage My Shop"
-        puts "the best resource for cafe owners in the world!"
-        puts "==============================================="
+        puts " the best resource for cafe owners in the world!"
+        puts "==================================================="
         list = Shop.all.map do | shop |
                     "#{shop.name}"
                 end
@@ -20,10 +20,11 @@ class CommandLineInterface
     end
 
     def what_next
-        prompt = TTY::Prompt.new
+        prompt = TTY::Prompt.new(enable_color: true)
         puts "=============================================="
-        puts "         >>>>>MENU ITEMS<<<<<"
-        puts "      What would you like to do?"
+        puts "     >>>>>#{@cafe.name}<<<<<"
+        puts "               MENU ITEMS"
+        puts "        What would you like to do?"
         puts "=============================================="
             menu_list = [
             "See your menu",

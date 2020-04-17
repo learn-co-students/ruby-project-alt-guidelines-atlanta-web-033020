@@ -13,7 +13,7 @@ class Drink < ActiveRecord::Base
     end
 
     def invent_new_drink
-        prompt = TTY::Prompt.new
+        prompt = TTY::Prompt.new(enable_color: true)
         set_name
         set_price
         @ingredients = []

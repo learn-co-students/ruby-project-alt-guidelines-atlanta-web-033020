@@ -32,6 +32,17 @@ class Drink < ActiveRecord::Base
             end
         puts "=============================================="
         create_drink_if_valid
+        #code below here is to add feature to put on user's menu after 
+        # prompt_to_confirm_add_to_menu
+        # @yes_no_add = prompt.select("Use arrows & ENTER to select:", (["yes", "no"])
+        # if @yes_no_add = "yes"
+        #     add_created_drink_to_my_menu
+        # else
+        #     puts "Drink NOT ADDED to your menu"
+    end
+
+    def add_created_drink_to_my_menu
+        
     end
 
     def create_drink_if_valid
@@ -40,6 +51,7 @@ class Drink < ActiveRecord::Base
             self.price = @price
             self.ingredients << @ingredients
             self.save
+            return self
         else
             puts "=============================================="
             puts "An item needs at least one ingredient."
@@ -91,6 +103,12 @@ class Drink < ActiveRecord::Base
     def prompt_for_ingredients
         puts "=============================================="
         puts "  Select INGREDIENTS to add to this item: "
+        puts "=============================================="
+    end
+
+    def prompt_to_confirm_add_to_menu
+        puts "=============================================="
+        puts "   Add this new drink to your menu now? "
         puts "=============================================="
     end
 

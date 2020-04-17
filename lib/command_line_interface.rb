@@ -48,7 +48,9 @@ class CommandLineInterface
             @cafe.remove_from_menu
             what_next
         when menu_list[4]
-            Drink.new.invent_new_drink
+            new_drink = Drink.new.invent_new_drink
+            @cafe.menu.drinks_menus.create(menu_id: @cafe.menu.id, drink_id: new_drink.id)
+            @cafe.menu.display_my_menu
             what_next
         when menu_list[5]
             Ingredient.display_all_ingredients

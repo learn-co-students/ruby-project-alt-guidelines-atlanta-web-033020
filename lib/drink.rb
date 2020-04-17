@@ -21,19 +21,10 @@ class Drink < ActiveRecord::Base
         create_drink_if_valid
     end
 
-    def set_ingredients
-        # this method loops user over menu to add ingredients until they are done
-        while @choice != "DONE" do
-        add_ingredient_to_drink
-        end
-    end
-    
     def add_ingredient_to_drink
-        # this method 
         show_all_ingredients
         prompt_for_ingredient_to_add
         @choice = gets.chomp
-        
         if Ingredient.find_by(id: @choice)
             @ingredients << Ingredient.find_by(id: @choice.to_i)
         else

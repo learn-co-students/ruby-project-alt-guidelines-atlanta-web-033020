@@ -14,7 +14,6 @@ class CommandLineInterface
         end
         puts "=============================================="
         puts 'Select your shop to get started:'
-        # stretch... are you an owner or customer?
         cafe_id = gets.chomp
         @cafe = Shop.find cafe_id
     end
@@ -57,8 +56,6 @@ class CommandLineInterface
             what_next
         when "7"
             exit
-        else
-            "Invalid entry. Please try again."
         end
     end
     

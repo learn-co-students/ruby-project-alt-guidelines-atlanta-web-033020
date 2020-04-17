@@ -7,35 +7,26 @@ class CommandLineInterface
     end
 
     def greet
-        prompt = TTY::Prompt.new(enable_color: true)
-        puts "==================================================="
-        puts "         Welcome to Manage My Shop"
-        puts " the best resource for cafe owners in the world!"
-        puts "==================================================="
-        list = Shop.all.map do | shop |
-                    "#{shop.name}"
-                end
-        cafe_id = prompt.select("Use arrows & ENTER to select your shop:", list)
-        @cafe = Shop.find_by(name: cafe_id)
+        prompt = TTY::Prompt.new(active_color: :yellow)
+        font = TTY::Font.new(:standard)
+        pastel = Pastel.new
+        displays_greet_banner
+        list_for_menu = Shop.all.map { | shop | "#{shop.name}" }
+        cafe_name = prompt.select("Use arrows & ENTER to select your shop:", list_for_menu)
+        @cafe = Shop.find_by(name: cafe_name)
     end
 
     def what_next
-        prompt = TTY::Prompt.new(enable_color: true)
-        puts "=============================================="
-        puts "     >>>>>#{@cafe.name}<<<<<"
-        puts "               MENU ITEMS"
-        puts "        What would you like to do?"
-        puts "=============================================="
+        prompt = TTY::Prompt.new(active_color: :yellow)
+        display_main_menu
             menu_list = [
             "See your menu",
             "Add an item to your menu",
             "Remove an item from the menu",
             "Create a new item",
             "See all ingredients",
-            "Create new ingredient"
-            ]
+            "Create new ingredient"]
         @choice = prompt.select("Use arrows & ENTER to select your shop:", menu_list.unshift("EXIT"))
-        puts "=============================================="
         
         case @choice
         when menu_list[1]
@@ -64,4 +55,24 @@ class CommandLineInterface
             exit
         end
     end
+
+    def display_main_menu
+        font = TTY::Font.new(:standard)
+        pastel = Pastel.new
+        puts pastel.red("===================================================")
+        puts pastel.yellow("            #{@cafe.name}")
+        puts pastel.yellow("               MENU ITEMS")
+        puts pastel.yellow("        What would you like to do?")
+        puts pastel.red("===================================================")
+    end
+
+    def displays_greet_banner
+        font = TTY::Font.new(:standard)
+        pastel = Pastel.new
+        puts pastel.red("===================================================")
+        puts pastel.yellow(font.write("COFFEE"))
+        puts pastel.yellow(" the best resource for cafe owners in the world!")
+        puts pastel.red("===================================================")
+    end
+
 end

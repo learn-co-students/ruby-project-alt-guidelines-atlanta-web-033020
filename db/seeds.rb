@@ -29,10 +29,10 @@ i20 = Ingredient.create(name: "agave nectar")
 
 # =============================Shop seeds=============================
 cafe1 = Shop.create(name: "Tiger Coffee", address: Faker::Address.street_address)
-cafe2 = Shop.create(name: "Insert Clever Name Here Coffee", address: Faker::Address.street_address)
-cafe3 = Shop.create(name: "Princeton's Backstreet Coffee", address: Faker::Address.street_address)
+cafe2 = Shop.create(name: "Yummy Coffee", address: Faker::Address.street_address)
+cafe3 = Shop.create(name: "Princeton Coffee", address: Faker::Address.street_address)
 cafe4 = Shop.create(name: "Drink Moar Coffee", address: Faker::Address.street_address)
-cafe5 = Shop.create(name: "My God, What is it? Coffee", address: Faker::Address.street_address)
+cafe5 = Shop.create(name: "Awful Coffee", address: Faker::Address.street_address)
 
 # =============================Drink seeds=============================
 d1 = Drink.create(name: "brewed coffee")

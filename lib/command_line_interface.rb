@@ -39,7 +39,7 @@ class CommandLineInterface
         
         case @choice
         when menu_list[1]
-            cafe.menu.display_my_menu
+            @cafe.menu.display_my_menu
             what_next
         when menu_list[2]
            @cafe.add_item_to_menu
@@ -49,8 +49,10 @@ class CommandLineInterface
             what_next
         when menu_list[4]
             new_drink = Drink.new.invent_new_drink
-            @cafe.menu.drinks_menus.create(menu_id: @cafe.menu.id, drink_id: new_drink.id)
-            @cafe.menu.display_my_menu
+            if new_drink != nil
+                @cafe.menu.drinks_menus.create(menu_id: @cafe.menu.id, drink_id: new_drink.id)
+            else @cafe.menu.display_my_menu
+            end
             what_next
         when menu_list[5]
             Ingredient.display_all_ingredients

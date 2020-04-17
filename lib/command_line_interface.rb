@@ -40,9 +40,10 @@ class CommandLineInterface
             what_next
         when menu_list[4]
             new_drink = Drink.new.invent_new_drink
-            if new_drink != nil
+            if new_drink 
                 @cafe.menu.drinks_menus.create(menu_id: @cafe.menu.id, drink_id: new_drink.id)
-            else @cafe.menu.display_my_menu
+            else 
+                @cafe.menu.display_my_menu
             end
             what_next
         when menu_list[5]

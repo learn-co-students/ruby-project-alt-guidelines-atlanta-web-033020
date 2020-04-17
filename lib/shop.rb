@@ -7,8 +7,8 @@ class Shop < ActiveRecord::Base
         pastel = Pastel.new
         prompts_for_item_to_add
         # shows what cafe instance DOES NOT have currently on menu
-        items = Drink.all - self.menu.drinks
-        menu_list =  items.map {|item| item.name}
+        items_list = Drink.all - self.menu.drinks
+        menu_list = items_list.collect {|i| i.name}
         @choice = prompt.select("Use arrows & ENTER to select your shop:", menu_list.unshift("EXIT menu"))
         puts pastel.red("===================================================")
         if @choice != menu_list[0]
@@ -37,7 +37,6 @@ class Shop < ActiveRecord::Base
         choice = prompt.select("Use arrows & ENTER to select your shop:", menu_list << "EXIT")
         
         # Finds drink_id for item and assign to variable to shorten
-        # binding.pry
         drink_to_remove = self.menu.drinks.find_by(name: choice)
         
         # Isolates DrinksMenu table row in var named 'removal' then destroys the record
@@ -59,8 +58,8 @@ class Shop < ActiveRecord::Base
         puts pastel.yellow("           Choose from below to")
         puts pastel.yellow("           **ADD** TO YOUR MENU")
         puts pastel.red("===================================================")
-        items = Drink.all - self.menu.drinks
-        list =  items.map do |item|
+        items_list = Drink.all - self.menu.drinks
+        menu_list = items_list.collect {|item| i.name}
             puts "#{item.name}"
             end
         puts pastel.red("===================================================")

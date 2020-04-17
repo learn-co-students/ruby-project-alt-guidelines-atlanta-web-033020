@@ -14,7 +14,7 @@ class Drink < ActiveRecord::Base
         @ingredients = []
         until @choice == "EXIT menu" do
             unused_ingredients = Ingredient.all - self.ingredients
-            menu_list = unused_ingredients.map {|i| i.name}
+            menu_list = unused_ingredients.collect {|i| i.name}
             prompt_for_ingredients
             @choice = prompt.select("Use arrows & ENTER to select:", menu_list.unshift("EXIT menu"))
             @ingredients << Ingredient.find_by(name: @choice)

@@ -3,43 +3,48 @@ class Drink < ActiveRecord::Base
     has_many :ingredients, through: :drink_ingredients
     has_many :drinks_menus
     has_many :menus, through: :drinks_menus
-    
-    def initialize
-        @ingredients = []
-    end
 
     def self.display_all_drinks
+        binding.pry
         Drink.all.each_with_index do |val, index|
+            binding.pry
             puts "#{index + 1}. #{val.name} --> Drink ID (#{val.id})"
         end
     end
 
     def invent_new_drink
+        prompt = TTY::Prompt.new
         set_name
         set_price
-        set_ingredients
-        create_drink_if_valid
-    end
-
-    def add_ingredient_to_drink
-        show_all_ingredients
-        prompt_for_ingredient_to_add
-        @choice = gets.chomp
-        if Ingredient.find_by(id: @choice)
-            @ingredients << Ingredient.find_by(id: @choice.to_i)
-        else
-            puts "Could not find that ingredient."
+        @ingredients = []
+        until @choice == "EXIT menu" do
+            unused_ingredients = Ingredient.all - self.ingredients
+            menu_list = unused_ingredients.map {|i| i.name}
+            prompt_for_ingredients
+            @choice = prompt.select("Use arrows & ENTER to select:", menu_list.unshift("EXIT menu"))
+            @ingredients << Ingredient.find_by(name: @choice)
+        
         end
+        puts "=============================================="
+        @ingredients.pop
+        @ingredients.each do |i|
+            puts "#{i.name} was added to drink"
+            end
+        puts "=============================================="
+        create_drink_if_valid
     end
 
     def create_drink_if_valid
         if @ingredients.any?
-        Drink.create(name: @name, price: @price, ingredients: @ingredients)
+            self.name = @name
+            self.price = @price
+            self.ingredients << @ingredients
+            self.save
         else
-        puts "=============================================="
-        puts "An item needs at least one ingredient."
-        puts "No new item was created."
-        puts "=============================================="
+            puts "=============================================="
+            puts "An item needs at least one ingredient."
+            puts "No new item was created."
+            puts "=============================================="
         end
     end
 
@@ -53,6 +58,12 @@ class Drink < ActiveRecord::Base
         Ingredient.display_all_ingredients
     end
 
+    def show_all_missing_ingredients
+        list = Ingredient.all - self.ingredients
+        menu_list = list.map {|l| l.name }
+        menu_list
+    end
+
     def set_price
         prompt_for_price
         drink_price = gets.chomp
@@ -64,10 +75,6 @@ class Drink < ActiveRecord::Base
         @name = gets.chomp
     end
     
-    def self.id_exists?(id)
-        self.find_by(id: id.to_i)
-    end
-
     def prompt_for_name
         puts "=============================================="    
         puts "Create new menu item"
@@ -81,22 +88,10 @@ class Drink < ActiveRecord::Base
         puts "=============================================="
     end
     
-    def prompt_for_ingredient_to_add
-        show_selected_ingredients
+    def prompt_for_ingredients
         puts "=============================================="
-        puts "Select an additional ingredient."
-        puts "Enter ID below: "
-        puts "Type 'DONE' to finish "
+        puts "  Select INGREDIENTS to add to this item: "
         puts "=============================================="
     end
-
-    # def prompt_for_ingredients
-    #     puts "=============================================="
-    #     puts "What INGREDIENTS does this item have?"
-    #     puts "=============================================="
-    #     puts "Enter ID from list below **OR**"
-    #     puts "type DONE when finished."
-    #     puts "=============================================="
-    # end
 
 end

@@ -8,3 +8,7 @@ gem "pry"
 gem "require_all"
 gem "faker"
 gem "rake"
+gem 'tty'
+gem 'tty-prompt'
+gem 'pastel'
+gem 'tty-color'

@@ -56,7 +56,7 @@ class AppCli
         this_review = Review.create(student: this_student, story: story_to_review, comment: rev_input)
 
         puts "Thank you for your review!"
-        puts "ID# #{this_review.id}: REVIEWED STORY #{this_review.story.title} REVIEW #{this_review.comment}"
+        puts "ID# #{this_review.id}: #{this_review.story.title} REVIEW #{this_review.comment}"
 
     end
 
@@ -234,7 +234,7 @@ class AppCli
         if input == "YES"
             lists_all_students_story_reviews
         elsif input == "NO"
-            return puts "Looking forward to seeing you soon at English Reads!"
+            return puts "Looking forward to seeing you next time, here at English Reads!"
         else
             puts "Please type YES or NO:"
             return wanna_see_reviews #(input)
